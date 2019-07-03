@@ -149,6 +149,12 @@ app.get('/collapsed', (req, res, next) => {
   delete result['e'];
   delete result['(a)'];
   delete result['(2)'];
+  for (let key of Object.keys(result)) {
+    result[key] = result[key].pop();
+    for(let secondKey of Object.keys(result[key])){
+      result[key][secondKey] = result[key][secondKey].pop();
+    }
+  }
   res.json({ result });
   }
 );
