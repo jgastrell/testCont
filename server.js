@@ -82,10 +82,13 @@ app.get('/collapsed', (req, res, next) => {
         if (valLower[valLower.length-1] === ".") 
           valLower = valLower.slice(0,-1);
           
-          for (let colNum = 15; colNum <= range.e.c; colNum++){ 
+          colIterator: for (let colNum = 15; colNum <= range.e.c; colNum++){ 
             let header = getHeaderName(colNum, worksheet);
+            if (header === "") {
+              continue colIterator;
+            }
             if (typeof header === 'string') {
-              header = header.replace(/(\r\n)/g, " ");
+              header = header.replace(/(\r\n)+/g, ", ");
             }
             const cellValues = worksheet[
               XLSX.utils.encode_cell({r: (rowNum-1), c: colNum})
